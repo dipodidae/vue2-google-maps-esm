@@ -1,12 +1,12 @@
-<template>
-  <div class="vue-street-view-pano-container">
-    <div ref="vue-street-view-pano" class="vue-street-view-pano"></div>
-    <slot></slot>
-  </div>
-</template>
-
 <script src="./streetViewPanoramaImpl.js">
 </script>
+
+<template>
+  <div class="vue-street-view-pano-container">
+    <div ref="vue-street-view-pano" class="vue-street-view-pano" />
+    <slot />
+  </div>
+</template>
 
 <style lang="css">
 .vue-street-view-pano-container {

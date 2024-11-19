@@ -1,11 +1,11 @@
-import _ from 'lodash';
-import propsBinder from '../utils/propsBinder.js';
-import downArrowSimulator from '../utils/simulateArrowDown.js';
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
+import assert from 'node:assert'
+import _ from 'lodash'
 import {
-  loaded
-} from '../manager.js';
-import assert from 'assert';
+  loaded,
+} from '../manager.js'
+import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
+import propsBinder from '../utils/propsBinder.js'
+import downArrowSimulator from '../utils/simulateArrowDown.js'
 
 const props = {
   bounds: {
@@ -16,62 +16,60 @@ const props = {
   },
   types: {
     type: Array,
-    default: function() {
-      return [];
-    }
+    default() {
+      return []
+    },
   },
   placeholder: {
     required: false,
-    type: String
+    type: String,
   },
   selectFirstOnEnter: {
     require: false,
     type: Boolean,
-    default: false
+    default: false,
   },
   value: {
     type: String,
-    default: ''
+    default: '',
   },
   options: {
     type: Object,
-  }
-};
+  },
+}
 
 export default {
   mixins: [getPropsValuesMixin],
 
   mounted() {
     loaded.then(() => {
-      const options = _.clone(this.getPropsValues());
+      const options = _.clone(this.getPropsValues())
       if (this.selectFirstOnEnter) {
-        downArrowSimulator(this.$refs.input);
+        downArrowSimulator(this.$refs.input)
       }
 
-      assert(typeof(google.maps.places.Autocomplete) === 'function',
-        'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      assert(typeof (google.maps.places.Autocomplete) === 'function', 'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?')
 
-      /* eslint-disable no-unused-vars */
       const finalOptions = _.pickBy(_.defaults(
         {},
         options.options,
-        _.omit(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder'])
-      ), (v, k) => v !== undefined);
+        _.omit(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder']),
+      ), (v, k) => v !== undefined)
 
       // Component restrictions is rather particular. Undefined not allowed
-      this.$watch('componentRestrictions', v => {
+      this.$watch('componentRestrictions', (v) => {
         if (v !== undefined) {
-          this.$autocomplete.setComponentRestrictions(v);
+          this.$autocomplete.setComponentRestrictions(v)
         }
-      });
+      })
 
-      this.$autocomplete = new google.maps.places.Autocomplete(this.$refs.input, finalOptions);
-      propsBinder(this, this.$autocomplete, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']));
+      this.$autocomplete = new google.maps.places.Autocomplete(this.$refs.input, finalOptions)
+      propsBinder(this, this.$autocomplete, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']))
 
       this.$autocomplete.addListener('place_changed', () => {
-        this.$emit('place_changed', this.$autocomplete.getPlace());
-      });
-    });
+        this.$emit('place_changed', this.$autocomplete.getPlace())
+      })
+    })
   },
-  props: props,
-};
+  props,
+}

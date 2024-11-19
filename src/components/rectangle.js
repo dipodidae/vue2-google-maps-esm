@@ -1,14 +1,14 @@
-import _ from 'lodash';
+import _ from 'lodash'
 
-import eventBinder from '../utils/eventsBinder.js';
-import propsBinder from '../utils/propsBinder.js';
-import MapElementMixin from './mapElementMixin';
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
+import eventBinder from '../utils/eventsBinder.js'
+import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
+import propsBinder from '../utils/propsBinder.js'
+import MapElementMixin from './mapElementMixin'
 
 const props = {
   bounds: {
     type: Object,
-    twoWay: true
+    twoWay: true,
   },
   draggable: {
     type: Boolean,
@@ -20,9 +20,9 @@ const props = {
   },
   options: {
     type: Object,
-    twoWay: false
-  }
-};
+    twoWay: false,
+  },
+}
 
 const events = [
   'click',
@@ -35,35 +35,35 @@ const events = [
   'mouseout',
   'mouseover',
   'mouseup',
-  'rightclick'
-];
+  'rightclick',
+]
 
 export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
-  props: props,
+  props,
 
   render() {
-    return '';
+    return ''
   },
 
   deferredReady() {
-    const options = _.clone(this.getPropsValues());
-    options.map = this.$map;
-    this.createRectangle(options);
+    const options = _.clone(this.getPropsValues())
+    options.map = this.$map
+    this.createRectangle(options)
   },
 
   methods: {
     createRectangle(options) {
-      this.$rectangleObject = new google.maps.Rectangle(options);
-      propsBinder(this, this.$rectangleObject, props);
-      eventBinder(this, this.$rectangleObject, events);
+      this.$rectangleObject = new google.maps.Rectangle(options)
+      propsBinder(this, this.$rectangleObject, props)
+      eventBinder(this, this.$rectangleObject, events)
     },
 
   },
 
   destroyed() {
     if (this.$rectangleObject) {
-      this.$rectangleObject.setMap(null);
+      this.$rectangleObject.setMap(null)
     }
   },
-};
+}

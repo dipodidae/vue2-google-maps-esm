@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import _ from 'lodash'
 
 export default {
   methods: {
-    getPropsValues () {
-      return _.mapValues(this.$options.props, (v, k) => this[k]);
-    }
-  }
-};
+    getPropsValues() {
+      return _.mapValues(this.$options.props, (v, k) => this[k])
+    },
+  },
+}

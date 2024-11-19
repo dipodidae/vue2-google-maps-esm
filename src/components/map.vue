@@ -1,15 +1,15 @@
-<template>
-  <div class="vue-map-container">
-    <div ref="vue-map" class="vue-map"></div>
-    <div class="vue-map-hidden">
-      <slot></slot>
-    </div>
-    <slot name="visible"></slot>
-  </div>
-</template>
-
 <script src="./mapImpl.js">
 </script>
+
+<template>
+  <div class="vue-map-container">
+    <div ref="vue-map" class="vue-map" />
+    <div class="vue-map-hidden">
+      <slot />
+    </div>
+    <slot name="visible" />
+  </div>
+</template>
 
 <style lang="css">
 .vue-map-container {

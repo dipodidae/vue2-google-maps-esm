@@ -1,7 +1,9 @@
-<template>
-  <input type="text" :placeholder="placeholder" ref="input"
-    :value="value"/>
-</template>
-
 <script src="./autocompleteImpl.js">
 </script>
+
+<template>
+  <input
+    ref="input" type="text" :placeholder="placeholder"
+    :value="value"
+  >
+</template>

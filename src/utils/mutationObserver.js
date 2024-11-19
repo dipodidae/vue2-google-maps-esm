@@ -4,27 +4,28 @@ const mutatorObservatorConfig = {
   attributes: true,
   childList: true,
   characterData: true,
-  subtree:true
-};
+  subtree: true,
+}
 
-const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
 
 export default (element, callback) => {
   if (MutationObserver) {
-    const observer = new MutationObserver(callback);
-    observer.observe(element, mutatorObservatorConfig);
+    const observer = new MutationObserver(callback)
+    observer.observe(element, mutatorObservatorConfig)
     return () => {
-      observer.disconnect();
-    };
-  } else {
-    var oldContent = '';
+      observer.disconnect()
+    }
+  }
+  else {
+    let oldContent = ''
     // IE Fallback !!!! crappy browser
     setInterval(() => {
-      if(oldContent != element.innerHTML) {
-        oldContent = element.innerHTML;
-        callback();
+      if (oldContent != element.innerHTML) {
+        oldContent = element.innerHTML
+        callback()
       }
-    }, 500);
-    return () => {};
+    }, 500)
+    return () => {}
   }
-};
+}

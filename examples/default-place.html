@@ -1,8 +1,8 @@
 <body>
   <div id="root">
-    <h1>Test</h1> "Singapore" should appear in the text box on page load. No errors in console.
-    <gmap-place-input default-place="Singapore" @place_changed="updatePlace">
-    </gmap-place-input>
+    <h1>Test</h1>
+    "Singapore" should appear in the text box on page load. No errors in console.
+    <gmap-place-input default-place="Singapore" @place_changed="updatePlace"> </gmap-place-input>
     {{place && place.lat}}, {{place && place.lng}},
   </div>
 
@@ -14,28 +14,27 @@
     Vue.use(VueGoogleMaps, {
       load: {
         key: 'AIzaSyBzlLYISGjL_ovJwAehh6ydhB56fCCpPQw',
-        libraries: 'places'
+        libraries: 'places',
       },
       // Demonstrating how we can customize the name of the components
       installComponents: true,
-    });
+    })
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       new Vue({
         el: '#root',
         data: {
-          place: null
+          place: null,
         },
         methods: {
           updatePlace(what) {
             this.place = {
               lat: what.geometry.location.lat(),
-              lng: what.geometry.location.lng()
-            };
-          }
-        }
-      });
-    });
+              lng: what.geometry.location.lng(),
+            }
+          },
+        },
+      })
+    })
   </script>
-
 </body>

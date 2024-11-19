@@ -1,12 +1,16 @@
 <body>
   <div id="root">
     <google-map :center="{lat: 1.38, lng: 103.8}" :zoom="12" style="width: 100%; height: 500px">
-      <ground-overlay source="./overlay.png" :bounds="{
+      <ground-overlay
+        source="./overlay.png"
+        :bounds="{
             north: 1.502,
             south: 1.185,
             east: 104.0262,
             west: 103.5998,
-        }" :opacity="0.5">
+        }"
+        :opacity="0.5"
+      >
       </ground-overlay>
     </google-map>
   </div>
@@ -23,37 +27,36 @@
       },
       // Demonstrating how we can customize the name of the components
       installComponents: false,
-    });
+    })
 
-    document.addEventListener('DOMContentLoaded', function() {
-      Vue.component('google-map', VueGoogleMaps.Map);
-      Vue.component('ground-overlay', Vue.extend({
-        render() {
-          return '';
-        },
-        mixins: [VueGoogleMaps.MapElementMixin],
-        props: ['source', 'bounds', 'opacity'],
-        created() {},
-        deferredReady: function() {
-          this.$overlay = new google.maps.GroundOverlay(
-            this.source,
-            this.bounds
-          );
-          this.$overlay.setOpacity(this.opacity);
-          this.$overlay.setMap(this.$map);
-        },
-        destroyed: function() {
-          this.$overlay.setMap(null);
-        },
-      }));
+    document.addEventListener('DOMContentLoaded', function () {
+      Vue.component('google-map', VueGoogleMaps.Map)
+      Vue.component(
+        'ground-overlay',
+        Vue.extend({
+          render() {
+            return ''
+          },
+          mixins: [VueGoogleMaps.MapElementMixin],
+          props: ['source', 'bounds', 'opacity'],
+          created() {},
+          deferredReady: function () {
+            this.$overlay = new google.maps.GroundOverlay(this.source, this.bounds)
+            this.$overlay.setOpacity(this.opacity)
+            this.$overlay.setMap(this.$map)
+          },
+          destroyed: function () {
+            this.$overlay.setMap(null)
+          },
+        }),
+      )
 
       new Vue({
         el: '#root',
         data: {
           place: '',
         },
-      });
-    });
+      })
+    })
   </script>
-
 </body>

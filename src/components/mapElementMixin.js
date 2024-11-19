@@ -1,6 +1,6 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
-import {DeferredReadyMixin} from '../utils/deferredReady';
+import { DeferredReadyMixin } from '../utils/deferredReady'
 
 /**
  * @class MapElementMixin @mixins DeferredReadyMixin
@@ -10,49 +10,49 @@ import {DeferredReadyMixin} from '../utils/deferredReady';
  * @property $map        The Google map (valid only after the promise returns)
  *
  *
- * */
+ */
 export default {
 
   mixins: [DeferredReadyMixin],
 
   created() {
     /* Search for the Map component in the parent */
-    let search = this.$findAncestor(
-      ans => ans.$mapCreated
-    );
+    const search = this.$findAncestor(
+      ans => ans.$mapCreated,
+    )
 
     if (!search) {
-      throw new Error(`${this.constructor.name} component must be used within a <Map>`);
+      throw new Error(`${this.constructor.name} component must be used within a <Map>`)
     }
 
     this.$mapPromise = search.$mapCreated.then((map) => {
-      this.$map = map;
-    });
+      this.$map = map
+    })
     // FIXME: This is a hack to ensure correct loading
     // when the map has already be instantiated.
     if (search.$mapObject) {
-      this.$map = search.$mapObject;
+      this.$map = search.$mapObject
     }
-    this.$MapElementMixin = search;
-    this.$map = null;
+    this.$MapElementMixin = search
+    this.$map = null
   },
 
-  beforeDeferredReady () {
-    return this.$mapPromise;
+  beforeDeferredReady() {
+    return this.$mapPromise
   },
 
   methods: {
     $findAncestor(condition) {
-      let search = this.$parent;
+      let search = this.$parent
 
       while (search) {
         if (condition(search)) {
-          return search;
+          return search
         }
-        search = search.$parent;
+        search = search.$parent
       }
-      return null;
-    }
-  }
+      return null
+    },
+  },
 
-};
+}

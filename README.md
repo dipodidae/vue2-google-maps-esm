@@ -33,15 +33,17 @@ Vue.use(VueGoogleMaps, {
 ### Nuxt.js projects
 
 For Nuxt.js projects, please import VueGoogleMaps in the following manner:
+
 ```js
-import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
+import * as VueGoogleMaps from 'vue2-google-maps'
 ```
+
 This is required for successful server-side rendering.
 
 ### Manually
 
 Just download `dist/vue-google-maps.js` file and include it from your HTML.
-***If you use this method, Vue 2.1.x is required***.
+**_If you use this method, Vue 2.1.x is required_**.
 
 [Example](http://xkjyeah.github.io/vue-google-maps/overlay.html).
 
@@ -58,22 +60,14 @@ See [API](API.md).
 If you want to write google map this way :
 
 ```html
-<gmap-map
-  :center="{lat:10, lng:10}"
-  :zoom="7"
-  map-type-id="terrain"
-  style="width: 500px; height: 300px"
-></gmap-map>
+<gmap-map :center="{lat:10, lng:10}" :zoom="7" map-type-id="terrain" style="width: 500px; height: 300px"></gmap-map>
 ```
 
 Or use the power of Vue.js within a google map like this:
+
 ```html
 <template>
-  <gmap-map
-    :center="center"
-    :zoom="7"
-    style="width: 500px; height: 300px"
-  >
+  <gmap-map :center="center" :zoom="7" style="width: 500px; height: 300px">
     <gmap-marker
       :key="index"
       v-for="(m, index) in markers"
@@ -88,28 +82,31 @@ Or use the power of Vue.js within a google map like this:
 <script>
   /////////////////////////////////////////
   // New in 0.4.0
-  import * as VueGoogleMaps from 'vue2-google-maps';
-  import Vue from 'vue';
+  import * as VueGoogleMaps from 'vue2-google-maps'
+  import Vue from 'vue'
 
   Vue.use(VueGoogleMaps, {
     load: {
       key: 'YOUR_API_TOKEN',
       v: 'OPTIONAL VERSION NUMBER',
       // libraries: 'places', //// If you need to use place input
-    }
-  });
+    },
+  })
 
   export default {
-    data () {
+    data() {
       return {
-        center: {lat: 10.0, lng: 10.0},
-        markers: [{
-          position: {lat: 10.0, lng: 10.0}
-        }, {
-          position: {lat: 11.0, lng: 11.0}
-        }]
+        center: { lat: 10.0, lng: 10.0 },
+        markers: [
+          {
+            position: { lat: 10.0, lng: 10.0 },
+          },
+          {
+            position: { lat: 11.0, lng: 11.0 },
+          },
+        ],
       }
-    }
+    },
   }
 </script>
 ```
@@ -123,7 +120,7 @@ on the map after its visibility has changed.
 
 You have two options:
 
-***Option A***
+**_Option A_**
 
 (Version 0.5.0) Run `Vue.$gmapDefaultResizeBus.$emit('resize')`.
 
@@ -131,10 +128,12 @@ For example, you can write the following to force all maps on your page
 to re-render:
 
 ```js
-watch: {
-  '$route'(to, from) {
+const options = {
+  watch: {
+    $route(to, from) {
     // Call resizePreserveCenter() on all maps
-    Vue.$gmapDefaultResizeBus.$emit('resize')
+      Vue.$gmapDefaultResizeBus.$emit('resize')
+    }
   }
 }
 ```
@@ -143,7 +142,7 @@ If you wish to be more selective about which maps receive the `resize`
 event, you can define `resizeBus` individually on each map. (See API).
 This will disconnect the map from `Vue.$gmapDefaultResizeBus`.
 
-***Option B***
+**_Option B_**
 
 Call `vm.$refs.<YOUR_MAP_HERE>.resizePreserveCenter()` on every map
 instance that you have
@@ -171,13 +170,12 @@ However you will need to include Vue and Lodash beforehand:
   <script src="dist/vue-google-maps.js"></script>
 </head>
 <body>
-
   <div id="root">
-    <gmap-map style="width: 100%; height: 100%; position: absolute; left:0; top:0"
-        :center="{lat: 1.38, lng: 103.8}"
-        :zoom="12"
+    <gmap-map
+      style="width: 100%; height: 100%; position: absolute; left: 0; top: 0"
+      :center="{lat: 1.38, lng: 103.8}"
+      :zoom="12"
     >
-
     </gmap-map>
   </div>
 
@@ -187,15 +185,13 @@ However you will need to include Vue and Lodash beforehand:
         key: 'YOUR_API_TOKEN',
         v: 'OPTIONAL VERSION NUMBER',
         // libraries: 'places', //// If you need to use place input
-      }
+      },
     })
 
     new Vue({
-        el: '#root',
-    });
-
+      el: '#root',
+    })
   </script>
-
 </body>
 ```
 
@@ -207,7 +203,7 @@ To enable any `vue-google-maps` components you need to set your api token:
 Vue.use(VueGoogleMap, {
   load: {
     key: 'YOUR_API_TOKEN',
-    v: '3.26',                // Google Maps API version
+    v: '3.26', // Google Maps API version
     // libraries: 'places',   // If you want to use places input
   }
 })

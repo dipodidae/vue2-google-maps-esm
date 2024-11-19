@@ -1,11 +1,11 @@
-import _ from 'lodash';
-import propsBinder from '../utils/propsBinder.js';
-import downArrowSimulator from '../utils/simulateArrowDown.js';
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
+import assert from 'node:assert'
+import _ from 'lodash'
 import {
-  loaded
-} from '../manager.js';
-import assert from 'assert';
+  loaded,
+} from '../manager.js'
+import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
+import propsBinder from '../utils/propsBinder.js'
+import downArrowSimulator from '../utils/simulateArrowDown.js'
 
 const props = {
   bounds: {
@@ -21,62 +21,60 @@ const props = {
   },
   types: {
     type: Array,
-    default: function() {
-      return [];
-    }
+    default() {
+      return []
+    },
   },
   placeholder: {
     required: false,
-    type: String
+    type: String,
   },
   className: {
     required: false,
-    type: String
+    type: String,
   },
   label: {
     required: false,
     type: String,
-    default: null
+    default: null,
   },
   selectFirstOnEnter: {
     require: false,
     type: Boolean,
-    default: false
-  }
-};
+    default: false,
+  },
+}
 
 export default {
   mixins: [getPropsValuesMixin],
 
   mounted() {
-    const input = this.$refs.input;
+    const input = this.$refs.input
 
     // Allow default place to be set
-    input.value = this.defaultPlace;
+    input.value = this.defaultPlace
     this.$watch('defaultPlace', () => {
-      input.value = this.defaultPlace;
-    });
+      input.value = this.defaultPlace
+    })
 
     loaded.then(() => {
-      const options = _.clone(this.getPropsValues());
+      const options = _.clone(this.getPropsValues())
       if (this.selectFirstOnEnter) {
-        downArrowSimulator(this.$refs.input);
+        downArrowSimulator(this.$refs.input)
       }
 
-      assert(typeof(google.maps.places.Autocomplete) === 'function',
-        'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      assert(typeof (google.maps.places.Autocomplete) === 'function', 'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?')
 
-      this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options);
-      propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
-        'defaultPlace', 'className', 'label']));
+      this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options)
+      propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'defaultPlace', 'className', 'label']))
 
       this.autoCompleter.addListener('place_changed', () => {
-        this.$emit('place_changed', this.autoCompleter.getPlace());
-      });
-    });
+        this.$emit('place_changed', this.autoCompleter.getPlace())
+      })
+    })
   },
   created() {
-    console.warn('The PlaceInput class is deprecated! Please consider using the Autocomplete input instead'); //eslint-disable-line no-console
+    console.warn('The PlaceInput class is deprecated! Please consider using the Autocomplete input instead')
   },
-  props: props,
-};
+  props,
+}

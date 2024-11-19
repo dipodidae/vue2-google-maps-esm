@@ -1,12 +1,12 @@
-var webpack = require('webpack');
-var path = require('path');
+const path = require('node:path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve('./dist'),
     publicPath: 'dist/',
-    filename: 'build.js'
+    filename: 'build.js',
   },
   module: {
     rules: [
@@ -23,24 +23,25 @@ module.exports = {
         // edit this for additional asset file types
         test: /\.(png|jpg|gif)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]',
-      }
+      },
     ],
   },
-};
+}
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
-      }
+        NODE_ENV: '"production"',
+      },
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
-      }
+        warnings: false,
+      },
     }),
-  ];
-} else {
-  module.exports.devtool = 'source-map';
+  ]
+}
+else {
+  module.exports.devtool = 'source-map'
 }
